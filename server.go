@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/go-sql-driver/mysql"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"log"
 )
 
@@ -34,6 +35,7 @@ func main() {
 	fmt.Println("Connected!")
 
 	app := fiber.New()
+	app.Use(cors.New())
 
 	Routers.SetupAsesoria(app, db)
 	Routers.SetupAlumno(app, db)
