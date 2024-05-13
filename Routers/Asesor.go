@@ -12,7 +12,7 @@ import (
 func SetupAsesor(app *fiber.App, db *sql.DB) {
 	asesor := app.Group("/Asesor")
 	asesor.Get("/", func(c *fiber.Ctx) error {
-		asesores, err := Scanners.Query(db, "SELECT * FROM asesor", Scanners.ScanAsesor)
+		asesores, err := Scanners.Query(db, "SELECT * FROM asesor where Activo = 1", Scanners.ScanAsesor)
 		if err != nil {
 			log.Fatal(err)
 		}
