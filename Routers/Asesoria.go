@@ -37,11 +37,11 @@ func SetupAsesoria(app *fiber.App, db *sql.DB) {
 			log.Println("Error al ejecutar la consulta SQL: ", err)
 			return err
 		}
-		return c.SendString("Asesoria insertado")
+		return c.JSON(fiber.Map{"message": "Asesoria insertado"})
 	})
 	asesoria.Post("/endAsesoria", func(c *fiber.Ctx) error {
 		var salidAsesoria Struct.TerminarAsesoria
-		if err := c.BodyParser(&asesoria); err != nil {
+		if err := c.BodyParser(&salidAsesoria); err != nil {
 			log.Println("Error al analizar el cuerpo de la solicitud: ", err)
 			return err
 		}
@@ -50,7 +50,7 @@ func SetupAsesoria(app *fiber.App, db *sql.DB) {
 			log.Println("Error al ejecutar la consulta SQL: ", err)
 			return err
 		}
-		return c.SendString("Asesoria terminada!")
+		return c.JSON(fiber.Map{"message": "Asesoria terminada!"})
 	})
 
 }

@@ -15,6 +15,7 @@ type Alumno struct {
 }
 
 type AsesoriaNoTerminadas struct {
+	Id                   int64
 	Nombre               string
 	Sexo                 string
 	Matricula            string

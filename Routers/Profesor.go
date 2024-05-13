@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"github.com/gofiber/fiber/v2"
 	"log"
+	"net/url"
 )
 
 func SetupProfesor(app *fiber.App, db *sql.DB) {
@@ -22,6 +23,19 @@ func SetupProfesor(app *fiber.App, db *sql.DB) {
 			log.Fatal(err)
 		}
 		return c.Send(j)
+	})
+	profesor.Get("/buscar/:nombre", func(c *fiber.Ctx) error {
+		nombre, err := url.QueryUnescape(c.Params("nombre"))
+
+		c.Type("json", "utf-8") // => "application/json; charset=utf-8"
+		profesor, err := Scanners.Query(db, "Select * from profesor where Nombre = ?", Scanners.ScanProfesor, nombre)
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
+		}
+		j, err := json.Marshal(profesor)
+
+		return c.Send(j)
+
 	})
 	profesor.Post("/newProfesor", func(c *fiber.Ctx) error {
 

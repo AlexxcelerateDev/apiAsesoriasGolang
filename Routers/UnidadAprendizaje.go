@@ -21,7 +21,7 @@ func SetupUA(app *fiber.App, db *sql.DB) {
 
 		return c.Send(j)
 	})
-	ua.Get("/:nombre", func(c *fiber.Ctx) error {
+	ua.Get("/buscar/:nombre", func(c *fiber.Ctx) error {
 		nombre, err := url.QueryUnescape(c.Params("nombre"))
 
 		c.Type("json", "utf-8") // => "application/json; charset=utf-8"
@@ -43,6 +43,6 @@ func SetupUA(app *fiber.App, db *sql.DB) {
 		if err != nil {
 			return err
 		}
-		return c.SendString("Unidad de Aprendizaje insertada")
+		return c.JSON(fiber.Map{"message": "UA Insertada!"})
 	})
 }
